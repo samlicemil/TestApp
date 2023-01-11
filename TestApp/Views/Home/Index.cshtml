@@ -1,0 +1,43 @@
+﻿@using GridMvc;
+@model List<TestModel>
+@{
+    ViewData["Title"] = "Export Excel";
+
+    var a = 1;
+
+
+
+    Html.Grid(Model).Columns(columns =>
+            {
+                columns.Add(o => o.DataCompany).Titled( "Lisans No").Sortable(true).SetWidth(150);
+                columns.Add(o => o.Name).Titled("Bayi Adı").Sortable(true).SetWidth(100);
+                columns.Add(o => o.StartDate).Titled("Lisans Başlangıç Tarihi").Sortable(false).SetWidth(100);
+                columns.Add(o => o.Surname).Titled("Şehir").Sortable(true).SetWidth(50);
+                columns.Add(o => o.FinishDate).Titled("Adres").Sortable(true).SetWidth(150);
+                columns.Add(o => o.FuelCode).Titled("Detay").Sortable(true).SetWidth(220)
+        .RenderValueAs(o => "<button type='button' class='btn btn-xs btn-icon btn-info btnDealerDetail' id='" +"asdasd" + 
+        "' oncl ick='DealerDetail(\"" + "asdasdsad" + "\")' title='Bayi Detay Bilgileri İçin Tıklayınız'><i class='icon white wb-file' aria-hidden='true'></i></button>");
+            }).WithPaging(10).SetLanguage("tr").Sortable().Filterable().WithMultipleFilters().Render();
+
+
+
+}
+
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Download Report</h3>
+        </div>
+        <form autocomplete="off" asp-controller="Home" asp-antiforgery="true" asp-action="DownloadReport" method="post">
+            <div class="card-body register-card-body">
+                <div class="form-row">
+                    <button type="submit" id="btnsubmit" class="btn btn-success">Export to Excel</button>
+                </div>
+                @await Html.Grid(Model).AutoGenerateColumns().RenderAsync() 
+            </div>
+            <div class="card-footer">
+            </div>
+        </form>
+    </div>
+</div>
